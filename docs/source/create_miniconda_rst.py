@@ -42,15 +42,24 @@ def get_latest_miniconda_sizes_and_hashes():
         "conda_version": CONDA_VERSION
     }
     for platform_id, installer_suffix in PLATFORM_MAP.items():
-        latest_installer = 'Miniconda3-latest-{}'.format(installer_suffix)
-        info["{}_py3_latest_size".format(platform_id)] = sizeof_fmt(data[latest_installer]['size'])
-        info["{}_py3_latest_hash".format(platform_id)] = data[latest_installer]['sha256']
+        latest_installer = f'Miniconda3-latest-{installer_suffix}'
+        info[f"{platform_id}_py3_latest_size"] = sizeof_fmt(
+            data[latest_installer]['size']
+        )
+
+        info[f"{platform_id}_py3_latest_hash"] = data[latest_installer]['sha256']
         for py_version in ("37", "38", "39"):
-            full_installer = 'Miniconda3-py{}_{}-{}'.format(py_version, CONDA_VERSION, installer_suffix)
+            full_installer = (
+                f'Miniconda3-py{py_version}_{CONDA_VERSION}-{installer_suffix}'
+            )
+
             if full_installer not in data:
                 continue
-            info["{}_py{}_size".format(platform_id, py_version)] = sizeof_fmt(data[full_installer]['size'])
-            info["{}_py{}_hash".format(platform_id, py_version)] = data[full_installer]['sha256']
+            info[f"{platform_id}_py{py_version}_size"] = sizeof_fmt(
+                data[full_installer]['size']
+            )
+
+            info[f"{platform_id}_py{py_version}_hash"] = data[full_installer]['sha256']
 
     return info
 

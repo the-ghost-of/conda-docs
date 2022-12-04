@@ -75,6 +75,7 @@ def main():
         if "_" in version_str:
             version_str = version_str.split("_")[1]
         return Version(version_str)
+
     # =================================================================
     # the main hosting server is central time, so pretend we are too
     # in order for anyone to be able to run this on Unix platforms.
@@ -85,9 +86,8 @@ def main():
         last_modified = datetime.datetime.fromtimestamp(
             math.floor(data[filename]["mtime"])
         )
-        last_mod_str = (
-            last_modified.date().isoformat() + " " + last_modified.time().isoformat()
-        )
+        last_mod_str = f"{last_modified.date().isoformat()} {last_modified.time().isoformat()}"
+
         if "sha256" not in data[filename]:
             print("WARNING: no sha256 information for:", filename)
             continue
